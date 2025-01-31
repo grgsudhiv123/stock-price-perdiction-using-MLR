@@ -8,7 +8,6 @@ from .models import StockLog
 
 def home(request):
     data = {}
-    datastocklog = StockLog.objects.all()
 
     if request.method == "POST":
         # df_train = pd.read_csv("./OHLC.csv")
@@ -62,13 +61,18 @@ def home(request):
         # Use the model to make predictions
         result = model.predict(X_scaled)[0]  # Extract the single prediction
 
+        percentage_change = ((result - open_val) / open_val) * 100
+        difference = result - open_val
+        
         # Prepare the data to be saved in the database
         save_stocklog = StockLog(
             open_price = open_val,
             high_price = high_val, 
             low_price = low_val,
             volume = vol_val, 
-            result = result
+            result = result,
+            percentage_change = percentage_change,
+            difference = difference,
         )
         save_stocklog.save()
         
@@ -79,8 +83,19 @@ def home(request):
             "high": high_val,
             "low": low_val,
             "vol": vol_val,
-            "result": result,
+            "result": f"{result:.2f}",
+            "percentage_change": f"{percentage_change:.2f}",
+            "difference": f"{difference:.2f}",
         }
         
     # Render the template with the data
-    return render(request, "home.html", {"data": data,"stocklog": datastocklog})
+    return render(request, "home.html", {"data": data})
+
+
+
+
+def stocklogs_view(request):
+    # Your logic to render stocklogs page
+    datastocklog = StockLog.objects.all()
+
+    return render(request, 'stockhistory.html', {"stocklog": datastocklog})

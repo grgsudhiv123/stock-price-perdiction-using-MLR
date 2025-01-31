@@ -1,43 +1,6 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Stock Tracker</title>
-    {% load static %}
-    <link rel="stylesheet" href="{% static 'css/style.css' %}">
-</head>
-<body>
-    <nav class="navbar">
-        <div class="navbar-container">
-            <div class="brand-container">
-                <svg class="logo" width="24" height="24" viewBox="0 0 24 24">
-                    <path 
-                    d="M3 12L8 7L13 15L21 5" 
-                    stroke="#28a745" 
-                    stroke-width="2.5" 
-                    fill="none" 
-                    stroke-linecap="round"
-                    stroke-linejoin="round"
-                    />
-                    <circle cx="3" cy="12" r="1.5" fill="#28a745"/>
-                    <circle cx="8" cy="7" r="1.5" fill="#28a745"/>
-                    <circle cx="13" cy="15" r="1.5" fill="#28a745"/>
-                    <circle cx="21" cy="5" r="1.5" fill="#28a745"/>
-                </svg>
-                <a href="#" class="navbar-brand">Stock Price Prediction</a>
-            </div>
-            <div class="dropdown">
-                <button onclick="toggleDropdown()" class="dropdown-button">☰</button>
-                <div id="dropdownMenu" class="dropdown-content">
-                    <a href="#" class="active">Dashboard</a>
-                    <a href="#">Analytics</a>
-                    <a href="#">History</a>
-                    <a href="#">Settings</a>
-                </div>
-            </div>
-        </div>
-    </nav>
+{% extends 'base.html' %}
+
+{% block content %}
 
     <!-- Form Container -->
     <div class="form-container">
@@ -64,50 +27,35 @@
     {% if data.result %}
     <div id="result-container">
         <h3>Submitted Values</h3>
-        <p>
-            <strong>Open:</strong> {{ data.open }} <br>
-            <strong>High:</strong> {{ data.high }} <br>
-            <strong>Low:</strong> {{ data.low }} <br>
-            <strong>Vol:</strong> {{ data.vol }} <br>
-            <strong>Close:</strong> {{ data.result }} <br>
-        </p>
+        <table class="result-table">
+            <thead>
+                <tr>
+                    <th><strong>Open</strong></th>
+                    <th><strong>High</strong></th>
+                    <th><strong>Low</strong></th>
+                    <th><strong>Vol</strong></th>
+                    <th><strong>Close</strong></th>
+                    <th><strong>% change</strong></th>
+                    <th><strong>Difference</strong></th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>{{ data.open }}</td>
+                    <td>{{ data.high }}</td>
+                    <td>{{ data.low }}</td>
+                    <td>{{ data.vol }}</td>
+                    <td>{{ data.result }}</td>
+                    <td>{{ data.percentage_change }}</td>
+                    <td>{{ data.difference }}</td>
+                </tr>
+            </tbody>
+        </table>
     </div>
+
+
     {% endif %}
+
+{% endblock %}
     
-    <!-- Stock Log Container -->
-    <div id="stock-log-container">
-        <h3>Stock Log</h3>
-        <div class="stock-log">
-            {% for data in stocklog %}
-            <p>
-                <strong>Open:</strong> {{ data.open_price }} <br>
-                <strong>High:</strong> {{ data.high_price }} <br>
-                <strong>Low:</strong> {{ data.low_price }} <br>
-                <strong>Vol:</strong> {{ data.volume }} <br>
-                <strong>Close:</strong> {{ data.result }} <br>
-            </p>
-            {% endfor %}
-        </div>
-    </div>
 
-    <!-- Dropdown Menu Script -->
-    <script>
-        function toggleDropdown() {
-            document.getElementById("dropdownMenu").classList.toggle("show");
-        }
-
-        // Close the dropdown if the user clicks outside of it
-        window.onclick = function(event) {
-            if (!event.target.matches('.dropdown-button')) {
-                var dropdowns = document.getElementsByClassName("dropdown-content");
-                for (var i = 0; i < dropdowns.length; i++) {
-                    var openDropdown = dropdowns[i];
-                    if (openDropdown.classList.contains('show')) {
-                        openDropdown.classList.remove('show');
-                    }
-                }
-            }
-        }
-    </script>
-</body>
-</html>

@@ -1,0 +1,44 @@
+{% extends 'base.html' %}
+
+{% block content %}   
+   
+   <!-- Stock Log Container -->
+    <div id="stock-log-container">
+        <h3>Stock Log</h3>
+        <div class="stock-log">
+            <table class="stock-table">
+                <thead>
+                    <tr>
+                        <th><strong>S.N</strong></th> <!-- Add the serial number column -->
+                        <th><strong>Open</strong></th>
+                        <th><strong>High</strong></th>
+                        <th><strong>Low</strong></th>
+                        <th><strong>Vol</strong></th>
+                        <th><strong>Close</strong></th>
+                        <th><strong>% change</strong></th>
+                        <th><strong>Difference</strong></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for data in stocklog %}
+                    <tr>
+                        <td>{{ data.id }}</td> <!-- This will display the index number -->
+                        <td>{{ data.open_price }}</td>
+                        <td>{{ data.high_price }}</td>
+                        <td>{{ data.low_price }}</td>
+                        <td>{{ data.volume }}</td>
+                        <td>{{ data.result }}</td>
+                        <td>{{ data.percentage_change }}</td>
+                        <td>{{ data.difference }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+
+
+
+{% endblock %}
