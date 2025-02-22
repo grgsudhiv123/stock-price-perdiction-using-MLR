@@ -17,18 +17,18 @@
                 {% endfor %}
             </select>
 
-            <label for="open">Open:</label>
-            <input type="number" id="open" name="open" step="any" required>
-            
-            <label for="high">High:</label>
-            <input type="number" id="high" name="high" step="any" required>
-            
-            <label for="low">Low:</label>
-            <input type="number" id="low" name="low" step="any" required>
-            
-            <label for="vol">Vol:</label>
-            <input type="number" id="vol" name="Vol" step="any" required>
-            
+            <label for="open">Open Price:</label>
+            <input type="number" id="open" name="open" step="any" placeholder="Enter open price" required>
+
+            <label for="high">High Price (Auto):</label>
+            <input type="number" id="high" name="high" step="any" readonly>
+
+            <label for="low">Low Price (Auto):</label>
+            <input type="number" id="low" name="low" step="any" readonly>
+
+            <label for="vol">Volume:</label>
+            <input type="number" id="vol" name="vol" step="any" placeholder="Enter volume" required>
+
             <button type="submit">Submit</button>
         </form>
     </div>
@@ -40,14 +40,14 @@
         <table class="result-table">
             <thead>
                 <tr>
-                    <th><strong>Company</strong></th>
-                    <th><strong>Open</strong></th>
-                    <th><strong>High</strong></th>
-                    <th><strong>Low</strong></th>
-                    <th><strong>Vol</strong></th>
-                    <th><strong>Close</strong></th>
-                    <th><strong>% Change</strong></th>
-                    <th><strong>Difference</strong></th>
+                    <th>Company</th>
+                    <th>Open</th>
+                    <th>High</th>
+                    <th>Low</th>
+                    <th>Vol</th>
+                    <th>Close</th>
+                    <th>% Change</th>
+                    <th>Difference</th>
                 </tr>
             </thead>
             <tbody>
@@ -65,5 +65,20 @@
         </table>
     </div>
     {% endif %}
+
+    <!-- JavaScript to auto-calculate High and Low -->
+    <script>
+        document.getElementById("open").addEventListener("input", function() {
+            let openValue = parseFloat(this.value);
+            
+            if (!isNaN(openValue) && openValue > 0) {
+                document.getElementById("high").value = (openValue * 1.1).toFixed(2);  // 10% increase
+                document.getElementById("low").value = (openValue * 0.9).toFixed(2);   // 10% decrease
+            } else {
+                document.getElementById("high").value = "";
+                document.getElementById("low").value = "";
+            }
+        });
+    </script>
 
 {% endblock %}
