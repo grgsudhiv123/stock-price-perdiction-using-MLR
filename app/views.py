@@ -53,8 +53,7 @@ def home(request):
         X = np.array([[open_val, high_val, low_val, vol_val]])
         X_scaled = scaler.transform(X)
         # Define the trained model with precomputed weights and bias
-        weights = np.array([5.03229441e+02, 5.49317695e+02, 5.38591693e+02,
-                           2.85364985e-01])  # Replace with your weights
+        weights = np.array([5.03229441e+02, 5.49317695e+02, 5.38591693e+02, 2.85364985e-01])  # Replace with your weights
         bias = 729.2879487128386  # Replace with your bias
         model = MultiLinearRegression(weights=weights, bias=bias)
 

@@ -1,15 +1,6 @@
 import numpy as np
 import pandas as pd
 
-# Load and clean the dataset
-# data = pd.read_csv('./2020-01-01.csv')
-# data['Vol'] = data['Vol'].str.replace(',', '').astype(float)
-# X = data[['Open', 'High', 'Low', 'Vol']].values  # Input features as numpy array
-# y = data['Close'].values  # Target output as numpy array
-
-# Step 1: Manual feature scaling (Standardization)
-
-
 class DataScaler:
     def __init__(self, means=None, stds=None):
         self.means = means
@@ -26,16 +17,8 @@ class DataScaler:
 
     def fit_transform(self, X):
         self.fit(X)
-        print(self.means, self.stds)
+        print("Means:", self.means, "\nStds:", self.stds)
         return self.transform(X)
-
-
-# Initialize scaler and scale the features
-# scaler = DataScaler()
-# X_scaled = scaler.fit_transform(X)
-
-# Step 2: Multi-Linear Regression Model from Scratch
-
 
 class MultiLinearRegression:
     def __init__(self, learning_rate=0.00000001, num_iterations=1000, weights=None, bias=None):
@@ -63,22 +46,13 @@ class MultiLinearRegression:
             self.weights -= self.learning_rate * dw
             self.bias -= self.learning_rate * db
 
-            # Optional: print loss every 100 iterations to monitor training
+            # Monitor training every 100 iterations
             if i % 100 == 0:
                 mse = np.mean((y - y_predicted) ** 2)
                 print(f"Iteration {i}: Mean Squared Error = {mse}")
 
     def predict(self, X):
         # Predict using the learned weights and bias
-        print(f"weights: {self.weights}")
-        print(f"bias: {self.bias}")
+        print("weights:", self.weights)
+        print("bias:", self.bias)
         return np.dot(X, self.weights) + self.bias
-
-
-# # Step 3: Train the model
-# model = MultiLinearRegression(learning_rate=0.01, num_iterations=1000)
-# model.fit(X_scaled, y)
-# breakpoint()
-# # Step 4: Make predictions (example: predict for the first 5 samples)
-# predictions = model.predict(X_scaled[:5])
-# print(predictions)
